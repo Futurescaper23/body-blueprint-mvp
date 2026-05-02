@@ -9,18 +9,85 @@ import { inputClass } from "@/components/ui";
 type Routine = {
   id: string;
   title: string;
+  description?: string;
+  tag?: string;
   exerciseIds: string[];
 };
 
+function pickExercises(exercises: Exercise[], ids: string[]) {
+  const available = ids.filter((id) => exercises.some((exercise) => exercise.id === id));
+  return available.length ? available : exercises.slice(0, 5).map((exercise) => exercise.id);
+}
+
+function starterRoutines(exercises: Exercise[]): Routine[] {
+  return [
+    {
+      id: "template-full-body",
+      title: "Beginner Full Body",
+      description: "A balanced starter session for someone who wants to train everything.",
+      tag: "35-45 min",
+      exerciseIds: pickExercises(exercises, [
+        "ex-goblet-squat",
+        "ex-incline-push-up",
+        "ex-seated-row",
+        "ex-dumbbell-rdl",
+        "ex-plank",
+      ]),
+    },
+    {
+      id: "template-upper",
+      title: "Upper Body Builder",
+      description: "Simple push and pull work for chest, back, shoulders, and arms.",
+      tag: "30-40 min",
+      exerciseIds: pickExercises(exercises, [
+        "ex-db-press",
+        "ex-lat-pulldown",
+        "ex-seated-row",
+        "ex-face-pull",
+        "ex-incline-push-up",
+      ]),
+    },
+    {
+      id: "template-legs",
+      title: "Leg Day Starter",
+      description: "Lower-body strength without making the session too intimidating.",
+      tag: "35 min",
+      exerciseIds: pickExercises(exercises, [
+        "ex-leg-press",
+        "ex-split-squat",
+        "ex-hamstring-curl",
+        "ex-calf-raise",
+        "ex-plank",
+      ]),
+    },
+    {
+      id: "template-quick",
+      title: "Quick Core & Posture",
+      description: "A short top-up routine for core, back, and shoulder control.",
+      tag: "20 min",
+      exerciseIds: pickExercises(exercises, [
+        "ex-plank",
+        "ex-face-pull",
+        "ex-seated-row",
+        "ex-lat-pulldown",
+      ]),
+    },
+  ];
+}
+
 export function RoutineBuilder({ exercises }: { exercises: Exercise[] }) {
   const [routines, setRoutines] = useState<Routine[]>(() => {
+    const templates = starterRoutines(exercises);
     if (typeof window === "undefined") {
-      return [{ id: "demo", title: "My Quick Full Body", exerciseIds: exercises.slice(0, 5).map((exercise) => exercise.id) }];
+      return templates;
     }
     const saved = localStorage.getItem("bb_routines");
-    return saved
-      ? (JSON.parse(saved) as Routine[])
-      : [{ id: "demo", title: "My Quick Full Body", exerciseIds: exercises.slice(0, 5).map((exercise) => exercise.id) }];
+    if (!saved) return templates;
+    const parsed = JSON.parse(saved) as Routine[];
+    const missingTemplates = templates.filter(
+      (template) => !parsed.some((routine) => routine.id === template.id),
+    );
+    return [...missingTemplates, ...parsed];
   });
   const [title, setTitle] = useState("");
   const [selectedRoutineId, setSelectedRoutineId] = useState(routines[0]?.id ?? "");
@@ -39,7 +106,13 @@ export function RoutineBuilder({ exercises }: { exercises: Exercise[] }) {
   function createRoutine() {
     const name = title.trim();
     if (!name) return;
-    const nextRoutine = { id: crypto.randomUUID(), title: name, exerciseIds: [] };
+    const nextRoutine = {
+      id: crypto.randomUUID(),
+      title: name,
+      description: "Custom routine",
+      tag: "Custom",
+      exerciseIds: [],
+    };
     save([nextRoutine, ...routines]);
     setSelectedRoutineId(nextRoutine.id);
     setTitle("");
@@ -98,7 +171,19 @@ export function RoutineBuilder({ exercises }: { exercises: Exercise[] }) {
       </section>
       {selectedRoutine ? (
         <section className="grid gap-3">
-          <h2 className="text-xl font-semibold text-white">{selectedRoutine.title}</h2>
+          <div>
+            <div className="flex items-center justify-between gap-3">
+              <h2 className="text-xl font-semibold text-white">{selectedRoutine.title}</h2>
+              {selectedRoutine.tag ? (
+                <span className="rounded-full bg-emerald-300/15 px-3 py-1 text-xs font-bold text-emerald-200">
+                  {selectedRoutine.tag}
+                </span>
+              ) : null}
+            </div>
+            {selectedRoutine.description ? (
+              <p className="mt-1 text-sm leading-6 text-slate-400">{selectedRoutine.description}</p>
+            ) : null}
+          </div>
           {selectedRoutine.exerciseIds.length ? (
             selectedRoutine.exerciseIds.map((exerciseId, index) => {
               const exercise = exercises.find((item) => item.id === exerciseId);

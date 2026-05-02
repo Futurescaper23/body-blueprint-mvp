@@ -34,7 +34,7 @@ Without Supabase environment variables, the app runs in demo mode using realisti
 5. In the client view, show:
    - `My Plan` for the assigned workout.
    - `Library` for searchable movement demos and exercise requests.
-   - `Routines` for user-created workout playlists.
+   - `Routines` for pre-made suggested workouts and user-created workout playlists.
    - Any exercise detail page for portrait video, cues, mistakes, favourites, completion, and weight logging.
 
 ## Environment Variables
@@ -197,9 +197,10 @@ Both pass.
 2. Add direct Supabase Storage video upload with compression guidance.
 3. Add trainer invite links for clients.
 4. Add Stripe Checkout and customer portal for trainer/business billing.
-5. Add workout progress history and plan adherence charts.
-6. Add reusable workout builder drag-and-drop ordering.
-7. Add admin moderation tools for video and exercise quality.
+5. Add AI routine generation from goals, available days, body areas, and equipment.
+6. Add workout progress history and plan adherence charts.
+7. Add reusable workout builder drag-and-drop ordering.
+8. Add admin moderation tools for video and exercise quality.
 
 ## Commercial Account Direction
 
