@@ -1,5 +1,4 @@
 import { assignPlan } from "@/lib/actions";
-import { clientPlans, plans } from "@/lib/sample-data";
 import { getTrainerDashboard } from "@/lib/queries";
 import { FormField, inputClass, Panel, ScreenHeader } from "@/components/ui";
 
@@ -9,7 +8,7 @@ export default async function AssignmentsPage({
   searchParams?: Promise<{ message?: string }>;
 }) {
   const params = await searchParams;
-  const { clients } = await getTrainerDashboard();
+  const { clients, plans, assignments } = await getTrainerDashboard();
 
   return (
     <div className="pb-10">
@@ -48,7 +47,7 @@ export default async function AssignmentsPage({
         <Panel className="p-5">
           <h2 className="text-xl font-semibold text-white">Current assignments</h2>
           <div className="mt-4 grid gap-3">
-            {clientPlans.map((assignment) => {
+            {assignments.map((assignment) => {
               const client = clients.find((item) => item.id === assignment.client_id);
               const plan = plans.find((item) => item.id === assignment.plan_id);
               return (

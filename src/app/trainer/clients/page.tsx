@@ -1,17 +1,16 @@
 import { Badge, Panel, ScreenHeader } from "@/components/ui";
-import { clientPlans, plans } from "@/lib/sample-data";
 import { getTrainerDashboard } from "@/lib/queries";
 import { initials } from "@/lib/utils";
 
 export default async function ClientsPage() {
-  const { clients } = await getTrainerDashboard();
+  const { clients, plans, assignments } = await getTrainerDashboard();
 
   return (
     <div className="pb-10">
       <ScreenHeader eyebrow="People" title="Clients" />
       <div className="grid gap-3 px-5">
         {clients.map((client) => {
-          const assignment = clientPlans.find((item) => item.client_id === client.id && item.is_active);
+          const assignment = assignments.find((item) => item.client_id === client.id && item.is_active);
           const plan = plans.find((item) => item.id === assignment?.plan_id);
           return (
             <Panel key={client.id} className="p-5">

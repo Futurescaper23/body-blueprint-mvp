@@ -334,3 +334,11 @@ export function getActivePlanForClient(clientId = demoClient.id) {
   );
   return assignment ? getPlanWithExercises(assignment.plan_id) : undefined;
 }
+
+export function getAssignedPlansForClient(clientId = demoClient.id) {
+  return clientPlans
+    .filter((item) => item.client_id === clientId && item.is_active)
+    .sort((a, b) => b.assigned_at.localeCompare(a.assigned_at))
+    .map((item) => getPlanWithExercises(item.plan_id))
+    .filter((plan): plan is PlanWithExercises => Boolean(plan));
+}

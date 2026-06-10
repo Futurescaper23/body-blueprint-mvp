@@ -1,27 +1,28 @@
 import Link from "next/link";
-import { Dumbbell, House, Library, ListChecks, UserRound } from "lucide-react";
+import { Apple, Dumbbell, House, Library, ListChecks, UserRound } from "lucide-react";
 
 const items = [
   { href: "/app", label: "Home", icon: House },
+  { href: "/app/nutrition", label: "Food", icon: Apple },
   { href: "/app/library", label: "Library", icon: Library },
-  { href: "/app/plan", label: "Plan", icon: Dumbbell },
-  { href: "/app/routines", label: "Routines", icon: ListChecks },
+  { href: "/app/plan", label: "Plans", icon: Dumbbell },
+  { href: "/app/routines", label: "Sessions", icon: ListChecks },
   { href: "/app/profile", label: "Profile", icon: UserRound },
 ];
 
 export function ClientBottomNav() {
   return (
-    <nav className="sticky bottom-0 z-20 grid grid-cols-5 border-t border-white/10 bg-[#0b0f14]/95 px-2 pb-4 pt-2 backdrop-blur">
+    <nav className="sticky bottom-0 z-20 grid grid-cols-6 border-t border-white/10 bg-[#0b0f14]/95 px-2 pb-4 pt-2 backdrop-blur">
       {items.map((item) => {
         const Icon = item.icon;
         return (
           <Link
             key={item.href}
             href={item.href}
-            className="flex min-h-14 flex-col items-center justify-center gap-1 rounded-lg text-xs font-medium text-slate-400 transition hover:bg-white/8 hover:text-white"
+            className="flex min-h-14 min-w-0 flex-col items-center justify-center gap-1 rounded-lg px-1 text-[11px] font-medium text-slate-400 transition hover:bg-white/8 hover:text-white"
           >
             <Icon className="h-5 w-5" aria-hidden />
-            {item.label}
+            <span className="truncate">{item.label}</span>
           </Link>
         );
       })}

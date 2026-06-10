@@ -2,8 +2,7 @@ import { notFound } from "next/navigation";
 import { addPlanExercise } from "@/lib/actions";
 import { PlanForm } from "@/components/forms/plan-form";
 import { Badge, FormField, inputClass, Panel, ScreenHeader } from "@/components/ui";
-import { exercises, plans } from "@/lib/sample-data";
-import { getClientPlan } from "@/lib/queries";
+import { getClientPlan, getTrainerDashboard } from "@/lib/queries";
 import { formatRest } from "@/lib/utils";
 
 export default async function EditPlanPage({
@@ -13,6 +12,7 @@ export default async function EditPlanPage({
 }) {
   const { id } = await params;
   const planWithExercises = await getClientPlan(id);
+  const { plans, exercises } = await getTrainerDashboard();
   const plan = plans.find((item) => item.id === id);
   if (!plan || !planWithExercises) notFound();
 

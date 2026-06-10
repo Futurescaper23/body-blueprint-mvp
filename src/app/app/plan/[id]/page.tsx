@@ -1,8 +1,8 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ChevronLeft } from "lucide-react";
+import { ChevronLeft, PlayCircle } from "lucide-react";
 import { WorkoutSession } from "@/components/client/workout-session";
-import { Badge, ScreenHeader } from "@/components/ui";
+import { Badge, ButtonLink, Panel, ScreenHeader } from "@/components/ui";
 import { getClientDashboard, getClientPlan } from "@/lib/queries";
 
 export default async function PlanDetailPage({
@@ -31,12 +31,29 @@ export default async function PlanDetailPage({
           <Badge>35-45 min</Badge>
         </div>
         <p className="text-sm leading-6 text-slate-400">{plan.description}</p>
-        <WorkoutSession
-          planId={plan.id}
-          exercises={plan.exercises}
-          initialCompletedIds={[...completedIds]}
-          favouriteIds={[...favouriteIds]}
-        />
+        <Panel className="p-5">
+          <div className="flex items-start gap-3">
+            <PlayCircle className="mt-0.5 h-6 w-6 text-emerald-300" aria-hidden />
+            <div>
+              <h2 className="text-lg font-semibold text-white">Start now</h2>
+              <p className="mt-1 text-sm leading-6 text-slate-400">
+                Work through the exercises below in order. If you are not sure where to begin,
+                just open the first one and press on from there.
+              </p>
+            </div>
+          </div>
+          <ButtonLink href="#session" className="mt-4 w-full">
+            Start this workout
+          </ButtonLink>
+        </Panel>
+        <section id="session">
+          <WorkoutSession
+            planId={plan.id}
+            exercises={plan.exercises}
+            initialCompletedIds={[...completedIds]}
+            favouriteIds={[...favouriteIds]}
+          />
+        </section>
       </div>
     </>
   );

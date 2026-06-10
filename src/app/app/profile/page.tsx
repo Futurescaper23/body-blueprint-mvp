@@ -39,10 +39,12 @@ export default async function ProfilePage() {
           </div>
         </Panel>
         <Panel className="p-5">
-          <h2 className="text-lg font-semibold text-white">Demo shortcuts</h2>
+          <h2 className="text-lg font-semibold text-white">Quick links</h2>
           <div className="mt-4 grid gap-3">
+            <ButtonLink href="/app/nutrition" variant="secondary">Nutrition</ButtonLink>
             <ButtonLink href="/app/library" variant="secondary">Exercise Library</ButtonLink>
-            <ButtonLink href="/app/routines" variant="secondary">My Routines</ButtonLink>
+            <ButtonLink href="/app/plan" variant="secondary">My Plans</ButtonLink>
+            <ButtonLink href="/app/routines" variant="secondary">My Sessions</ButtonLink>
             <ButtonLink href="/app/favourites" variant="secondary">Favourites</ButtonLink>
           </div>
         </Panel>

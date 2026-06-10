@@ -8,7 +8,7 @@ export function AppFrame({ children }: { children: ReactNode }) {
 
 export function PhoneShell({ children }: { children: ReactNode }) {
   return (
-    <div className="mx-auto min-h-screen w-full max-w-md border-x border-white/8 bg-[#0b0f14] shadow-2xl shadow-black/30">
+    <div className="mx-auto min-h-screen w-full max-w-md overflow-x-hidden border-x border-white/8 bg-[#0b0f14] shadow-2xl shadow-black/30">
       {children}
     </div>
   );

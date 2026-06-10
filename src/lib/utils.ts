@@ -28,4 +28,13 @@ export function hasSupabaseEnv() {
   );
 }
 
-export const appUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+function normaliseAppUrl(url: string) {
+  return url.startsWith("http") ? url : `https://${url}`;
+}
+
+export const appUrl = normaliseAppUrl(
+  process.env.NEXT_PUBLIC_SITE_URL ??
+    process.env.VERCEL_PROJECT_PRODUCTION_URL ??
+    process.env.VERCEL_URL ??
+    "http://localhost:3000",
+);
