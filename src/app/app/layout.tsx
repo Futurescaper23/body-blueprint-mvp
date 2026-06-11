@@ -5,7 +5,7 @@ import { PhoneShell } from "@/components/ui";
 export default function ClientLayout({ children }: { children: ReactNode }) {
   return (
     <PhoneShell>
-      <div className="min-h-screen pb-2">{children}</div>
+      <div className="min-h-screen pb-28">{children}</div>
       <ClientBottomNav />
     </PhoneShell>
   );

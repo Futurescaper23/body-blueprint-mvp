@@ -12,7 +12,7 @@ const items = [
 
 export function ClientBottomNav() {
   return (
-    <nav className="sticky bottom-0 z-20 grid grid-cols-6 border-t border-white/10 bg-[#0b0f14]/95 px-2 pb-4 pt-2 backdrop-blur">
+    <nav className="fixed inset-x-0 bottom-0 z-30 mx-auto grid w-full max-w-md grid-cols-6 border-t border-white/10 bg-[#0b0f14]/95 px-2 pb-[calc(env(safe-area-inset-bottom)+0.75rem)] pt-2 backdrop-blur">
       {items.map((item) => {
         const Icon = item.icon;
         return (
